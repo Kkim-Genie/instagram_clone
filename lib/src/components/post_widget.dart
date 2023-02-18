@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:instagram_clone/src/components/avatar_widget.dart';
 import 'package:instagram_clone/src/components/image_data.dart';
@@ -33,6 +34,46 @@ class PostWidget extends StatelessWidget {
     );
   }
 
+  Widget _image() {
+    return CachedNetworkImage(
+      imageUrl:
+          'https://blog.kakaocdn.net/dn/p5yJc/btq8rfIsiHU/0pBilCubJkhtR4SOIuixS1/img.jpg',
+    );
+  }
+
+  Widget _infoCount() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 15),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(
+            children: [
+              ImageData(
+                IconsPaths.likeOffIcon,
+                width: 65,
+              ),
+              const SizedBox(width: 15),
+              ImageData(
+                IconsPaths.replyIcon,
+                width: 60,
+              ),
+              const SizedBox(width: 15),
+              ImageData(
+                IconsPaths.directMessage,
+                width: 55,
+              ),
+            ],
+          ),
+          ImageData(
+            IconsPaths.bookMarkOffIcon,
+            width: 50,
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -40,8 +81,10 @@ class PostWidget extends StatelessWidget {
       child: Column(
         children: [
           _header(),
-          // _image(),
-          // _infoCount(),
+          const SizedBox(height: 15),
+          _image(),
+          const SizedBox(height: 15),
+          _infoCount(),
           // _infoDescription(),
           // _replyTextBtn(),
           // _dateAgo(),
