@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:instagram_clone/src/components/image_data.dart';
+import 'package:instagram_clone/src/controller/bottom_nav_controller.dart';
 
 class SearchFocus extends StatefulWidget {
   const SearchFocus({super.key});
@@ -58,17 +58,15 @@ class _SearchFocusState extends State<SearchFocus>
   }
 
   Widget _body() {
-    return Container(
-      child: TabBarView(
-        controller: tabController,
-        children: const [
-          Center(child: Text('인기페이지')),
-          Center(child: Text('계정페이지')),
-          Center(child: Text('오디오페이지')),
-          Center(child: Text('태그페이지')),
-          Center(child: Text('장소페이지')),
-        ],
-      ),
+    return TabBarView(
+      controller: tabController,
+      children: const [
+        Center(child: Text('인기페이지')),
+        Center(child: Text('계정페이지')),
+        Center(child: Text('오디오페이지')),
+        Center(child: Text('태그페이지')),
+        Center(child: Text('장소페이지')),
+      ],
     );
   }
 
@@ -78,7 +76,7 @@ class _SearchFocusState extends State<SearchFocus>
       appBar: AppBar(
         elevation: 0,
         leading: GestureDetector(
-          onTap: Get.back,
+          onTap: BottomNavController.to.willPopAction,
           child: Padding(
             padding: const EdgeInsets.all(15.0),
             child: ImageData(IconsPaths.backBtnIcon),
