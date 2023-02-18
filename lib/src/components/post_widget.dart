@@ -104,11 +104,38 @@ class PostWidget extends StatelessWidget {
     );
   }
 
+  Widget _replyTextBtn() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 15),
+      child: GestureDetector(
+        onTap: () {},
+        child: const Text(
+          '댓글 199개 모두 보기',
+          style: TextStyle(
+            color: Colors.grey,
+            fontSize: 13,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _dateAgo() {
+    return const Padding(
+      padding: EdgeInsets.symmetric(horizontal: 15),
+      child: Text(
+        '1일전',
+        style: TextStyle(color: Colors.grey, fontSize: 11),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(top: 20),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           _header(),
           const SizedBox(height: 15),
@@ -117,8 +144,10 @@ class PostWidget extends StatelessWidget {
           _infoCount(),
           const SizedBox(height: 5),
           _infoDescription(),
-          // _replyTextBtn(),
-          // _dateAgo(),
+          const SizedBox(height: 5),
+          _replyTextBtn(),
+          const SizedBox(height: 5),
+          _dateAgo(),
         ],
       ),
     );
