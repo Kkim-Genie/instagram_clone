@@ -1,7 +1,34 @@
-import 'package:flutter/material.dart';
+import 'dart:math';
 
-class Search extends StatelessWidget {
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:quiver/iterables.dart';
+
+class Search extends StatefulWidget {
   const Search({super.key});
+
+  @override
+  State<Search> createState() => _SearchState();
+}
+
+class _SearchState extends State<Search> {
+  List<List<int>> groupBox = [[], [], []];
+  List<int> groupIndex = [0, 0, 0];
+
+  @override
+  void initState() {
+    super.initState();
+    for (var i = 0; i < 100; i++) {
+      var gi = groupIndex.indexOf(min<int>(groupIndex)!);
+      var size = 1;
+      if (gi != 1) {
+        size = Random().nextInt(100) % 2 == 0 ? 1 : 2;
+      }
+      groupBox[gi].add(size);
+      groupIndex[gi] += size;
+    }
+  }
 
   Widget _appbar() {
     return Row(
@@ -36,11 +63,35 @@ class Search extends StatelessWidget {
     );
   }
 
-  // Widget _body() {
-  //   return SingleChildScrollView(
-  //     child: ,
-  //   );
-  // }
+  Widget _body() {
+    return SingleChildScrollView(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: List.generate(
+          groupBox.length,
+          (index) => Expanded(
+            child: Column(
+              children: List.generate(
+                groupBox[index].length,
+                (jndex) => Container(
+                  height: Get.width * 0.33 * groupBox[index][jndex],
+                  decoration: BoxDecoration(
+                      border: Border.all(color: Colors.white),
+                      color: Colors.primaries[
+                          Random().nextInt(Colors.primaries.length)]),
+                  child: CachedNetworkImage(
+                    imageUrl:
+                        'https://t1.kakaocdn.net/thumb/R1920x0.fwebp.q100/?fname=https%3A%2F%2Ft1.kakaocdn.net%2Fkakaocorp%2Fkakaocorp%2Fadmin%2Fservice%2Fa85d0594017900001.jpg',
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ).toList(),
+            ),
+          ),
+        ).toList(),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +100,7 @@ class Search extends StatelessWidget {
         child: Column(
           children: [
             _appbar(),
-            // Expanded(child: _body()),
+            Expanded(child: _body()),
           ],
         ),
       ),
