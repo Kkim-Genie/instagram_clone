@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:expandable_text/expandable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:instagram_clone/src/components/avatar_widget.dart';
 import 'package:instagram_clone/src/components/image_data.dart';
@@ -74,6 +75,35 @@ class PostWidget extends StatelessWidget {
     );
   }
 
+  Widget _infoDescription() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 15),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          const Text(
+            '좋아요 150개',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          ExpandableText(
+            '콘텐츠1입니다.\n콘텐츠1입니다.\n콘텐츠1입니다.\n콘텐츠1입니다.\n',
+            prefixText: 'genie',
+            onPrefixTap: () {
+              print("Genie Page move");
+            },
+            prefixStyle: const TextStyle(fontWeight: FontWeight.bold),
+            expandText: '더보기',
+            collapseText: '접기',
+            maxLines: 3,
+            expandOnTextTap: true,
+            collapseOnTextTap: true,
+            linkColor: Colors.grey,
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -85,7 +115,8 @@ class PostWidget extends StatelessWidget {
           _image(),
           const SizedBox(height: 15),
           _infoCount(),
-          // _infoDescription(),
+          const SizedBox(height: 5),
+          _infoDescription(),
           // _replyTextBtn(),
           // _dateAgo(),
         ],
