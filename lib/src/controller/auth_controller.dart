@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:instagram_clone/src/binding/init_bindings.dart';
 import 'package:instagram_clone/src/models/instagram_user.dart';
 import 'package:instagram_clone/src/repository/user_repository.dart';
 
@@ -15,6 +16,7 @@ class AuthController extends GetxController {
     var userData = await UserRepository.loginUserByUid(uid);
     if (userData != null) {
       user(userData);
+      InitBinding.additionalBinding();
     }
     return userData;
   }
