@@ -3,9 +3,12 @@ import 'package:expandable_text/expandable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:instagram_clone/src/components/avatar_widget.dart';
 import 'package:instagram_clone/src/components/image_data.dart';
+import 'package:instagram_clone/src/models/post.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class PostWidget extends StatelessWidget {
-  const PostWidget({super.key});
+  final Post post;
+  const PostWidget({super.key, required this.post});
 
   Widget _header() {
     return Padding(
@@ -14,12 +17,10 @@ class PostWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           AvatarWidget(
-            type: AvatarType.TYPE3,
-            nickname: 'genie',
-            size: 40,
-            thumbPath:
-                'https://t1.kakaocdn.net/thumb/R1920x0.fwebp.q100/?fname=https%3A%2F%2Ft1.kakaocdn.net%2Fkakaocorp%2Fkakaocorp%2Fadmin%2Fservice%2Fa85d0594017900001.jpg',
-          ),
+              type: AvatarType.TYPE3,
+              nickname: post.userInfo!.nickname,
+              size: 40,
+              thumbPath: post.userInfo!.thumbnail!),
           GestureDetector(
             onTap: () {},
             child: Padding(
@@ -36,10 +37,7 @@ class PostWidget extends StatelessWidget {
   }
 
   Widget _image() {
-    return CachedNetworkImage(
-      imageUrl:
-          'https://blog.kakaocdn.net/dn/p5yJc/btq8rfIsiHU/0pBilCubJkhtR4SOIuixS1/img.jpg',
-    );
+    return CachedNetworkImage(imageUrl: post.thumbnail!);
   }
 
   Widget _infoCount() {
@@ -81,13 +79,13 @@ class PostWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const Text(
-            '좋아요 150개',
-            style: TextStyle(fontWeight: FontWeight.bold),
+          Text(
+            '좋아요 ${post.likeCount ?? 0}개',
+            style: const TextStyle(fontWeight: FontWeight.bold),
           ),
           ExpandableText(
-            '콘텐츠1입니다.\n콘텐츠1입니다.\n콘텐츠1입니다.\n콘텐츠1입니다.\n',
-            prefixText: 'genie',
+            post.description ?? '',
+            prefixText: post.userInfo!.nickname,
             onPrefixTap: () {
               print("Genie Page move");
             },
@@ -121,11 +119,11 @@ class PostWidget extends StatelessWidget {
   }
 
   Widget _dateAgo() {
-    return const Padding(
-      padding: EdgeInsets.symmetric(horizontal: 15),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 15),
       child: Text(
-        '1일전',
-        style: TextStyle(color: Colors.grey, fontSize: 11),
+        timeago.format(post.createdAt!),
+        style: const TextStyle(color: Colors.grey, fontSize: 11),
       ),
     );
   }
